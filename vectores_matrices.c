@@ -3,12 +3,15 @@
 void ingresarNotas(float (*notas)[3], int cantidadEstudiantes) {
     int i, j;
     for(i = 0; i < cantidadEstudiantes; i++) {
-        printf("\nEstudiante %d:\n", i + 1);
+        printf("\nEstudiante. %d:\n", i + 1);
         for(j = 0; j < 3; j++) {
-            do {
-                printf("Ingrese nota de la asignatura %d: ", j + 1);
+            printf("Ingrese nota de la asignatura %d: ", j + 1);
+            scanf("%f", &notas[i][j]);
+            
+            while(notas[i][j] < 0 || notas[i][j] > 10) {
+                printf("¡ERROR! Nota inválida. Ingrese nuevamente (0-10): ");
                 scanf("%f", &notas[i][j]);
-            } while(notas[i][j] < 0 || notas[i][j] > 10);
+            }
         }
     }
 }
@@ -54,6 +57,7 @@ void ingresarNotas(float (*notas)[3], int cantidadEstudiantes) {
         }
         printf("Estudiante %d -> Max: %.2f | Min: %.2f\n", i + 1, max, min);
     }
+}
 
 
     // Máximo y mínimo por asignatura
@@ -85,4 +89,22 @@ void ingresarNotas(float (*notas)[3], int cantidadEstudiantes) {
         }
         printf("Asignatura %d -> Aprobados: %d | Reprobados: %d\n", j + 1, aprobados, reprobados);
     }
+}
+
+int main() {
+    #define ESTUDIANTES 7
+    float notas[ESTUDIANTES][3] = {0.0};
+    float *puntero = &notas[0][0];
+
+    ingresarNotas(notas, ESTUDIANTES);
+    promedioEstudiantes(notas, ESTUDIANTES);
+    promedioAsignaturas(notas, ESTUDIANTES);
+    maxMinEstudiante(notas, ESTUDIANTES);
+    maxMinAsignatura(notas, ESTUDIANTES);
+    aprobacion(notas, ESTUDIANTES);
+
+    printf("\n--- PRUEBA DE PUNTERO ---\n");
+    printf("Dirección de memoria del arreglo: %p\n", puntero);
+
+    return 0;
 }
